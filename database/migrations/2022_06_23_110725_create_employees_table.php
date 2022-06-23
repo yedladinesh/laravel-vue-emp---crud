@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string("name",100);
             $table->string("address", 200);
             $table->string("email", 200)->unique();
-            $table->number("phone_number");
+            $table->integer("phone_number");
             $table->string("dob");
             $table->string("image");
             $table->timestamps();
