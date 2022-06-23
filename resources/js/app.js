@@ -13,8 +13,10 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
 
+
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+//Vue.component('pagination', require('laravel-vue-pagination'));
 
 import App from './app.vue';
 import { routes } from './routes';

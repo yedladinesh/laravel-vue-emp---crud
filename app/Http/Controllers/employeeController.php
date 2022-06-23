@@ -10,7 +10,21 @@ class employeeController extends Controller
     //
     public function index()
     {
+        //$employee = employee::orderBy('id', 'desc')->paginate(3);
         $employee = employee::all()->toArray();
+        //all()->toArray();
+        // $response = [
+        //     'pagination' => [
+        //         'total' => $employee->total(),
+        //         'per_page' => $employee->perPage(),
+        //         'current_page' => $employee->currentPage(),
+        //         'last_page' => $employee->lastPage(),
+        //         'from' => $employee->firstItem(),
+        //         'to' => $employee->lastItem()
+        //     ],
+        //     'data' => $employee
+        // ];
+
         return array_reverse($employee);      
     }
     public function store(Request $request)
@@ -43,5 +57,12 @@ class employeeController extends Controller
         $employee = employee::find($id);
         $employee->delete();
         return response()->json('employee deleted!');
+    }
+
+    public function search(Request $request)
+    {
+        $employee = employee::where('name', 'LIKE','%'. $request->keywords .'%')->orWhere('email','LIKE','%'.$request->keywords.'%')->get();
+        return response()->json($employee);
+         
     }
 }

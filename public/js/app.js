@@ -5542,22 +5542,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//import pagination from 'laravel-vue-pagination';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // components:{
+  //     'pagination':  pagination
+  // },
   data: function data() {
     return {
+      keywords: null,
       employees: {}
     };
   },
   created: function created() {
     this.getEmployee();
   },
+  watch: {
+    keywords: function keywords(after, before) {
+      this.search();
+    }
+  },
   methods: {
     getEmployee: function getEmployee() {
       var _this = this;
 
       this.axios.get('http://127.0.0.1:8000/api/employee').then(function (response) {
-        _this.employees = response.data;
-        console.log(response.data);
+        _this.employees = response.data; //this.pagination = response.data.pagination;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5572,6 +5585,18 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.employees.splice(i, 1);
       });
+    },
+    // search
+    search: function search() {
+      var _this3 = this;
+
+      this.axios.get('http://127.0.0.1:8000/api/search', {
+        params: {
+          keywords: this.keywords
+        }
+      }).then(function (response) {
+        return _this3.employees = response.data;
+      })["catch"](function (error) {});
     }
   }
 });
@@ -5606,7 +5631,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.
 
 
 vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default()));
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default())); //Vue.component('pagination', require('laravel-vue-pagination'));
+
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
@@ -28703,32 +28729,6 @@ var render = function () {
                 },
               }),
             ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Image")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.employee.email,
-                    expression: "employee.email",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.employee.email },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.employee, "email", $event.target.value)
-                  },
-                },
-              }),
-            ]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
@@ -28928,32 +28928,6 @@ var render = function () {
                   },
                 }),
               ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Image")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.employee.email,
-                      expression: "employee.email",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.employee.email },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.employee, "email", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6" }, [
@@ -29076,7 +29050,7 @@ var render = function () {
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "col-md-12" },
+        { staticClass: "col-md-6" },
         [
           _c(
             "router-link",
@@ -29089,6 +29063,30 @@ var render = function () {
         ],
         1
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.keywords,
+              expression: "keywords",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Seach by name, email.." },
+          domProps: { value: _vm.keywords },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.keywords = $event.target.value
+            },
+          },
+        }),
+      ]),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [

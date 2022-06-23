@@ -2,8 +2,11 @@
     <div class="container">
         <h2 class="text-center">Employee List</h2>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <router-link :to="{ name: 'EmployeeCreate' }" class="btn btn-primary btn-sm float-right mb-2">Add Employee</router-link>
+            </div>
+            <div class="col-md-6">
+                <input type="text" placeholder="Seach by name, email.." class="form-control" v-model="keywords">
             </div>
         </div>
         <div class="row">
@@ -39,26 +42,37 @@
                         </tr>
                     </tbody>
                 </table>
+                 <!-- <pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="5" @paginate="fetchPosts()"></pagination> --}} -->
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    //import pagination from 'laravel-vue-pagination';
     export default {
+        // components:{
+        //     'pagination':  pagination
+        // },
         data() {
             return {
+                keywords: null,
                 employees: {}
             }
         },
         created() {
             this.getEmployee();
         },
+        watch: {
+            keywords(after, before) {
+                this.search();
+            }
+        },
         methods: {
             getEmployee() {
               this.axios.get('http://127.0.0.1:8000/api/employee').then(response => {
                 this.employees = response.data;
-                console.log(response.data)
+                //this.pagination = response.data.pagination;
             }).catch(error=>{
                 console.log(error)
             })
@@ -70,6 +84,13 @@
                         let i = this.employees.map(data => data.id).indexOf(employeeId);
                         this.employees.splice(i, 1)
                     });
+            },
+            // search
+            search(){
+                this.axios
+                .get('http://127.0.0.1:8000/api/search',  { params: { keywords: this.keywords } })
+                .then(response => this.employees = response.data)
+                .catch(error => {});
             }
         }
     }
