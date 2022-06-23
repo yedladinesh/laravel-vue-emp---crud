@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string("email", 200)->unique();
             $table->string("phone_number");
             $table->string("dob");
-            $table->string("image");
+            $table->string("image")->nullable();
             $table->timestamps();
         });
     }

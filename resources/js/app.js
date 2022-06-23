@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 //window.Vue = require('vue').default;
+//import * as Vue from 'vue'
 import Vue from 'vue'
 
 import axios from 'axios';

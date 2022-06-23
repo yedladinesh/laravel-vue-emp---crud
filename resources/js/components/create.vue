@@ -12,11 +12,11 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" v-model="employee.name">
+                        <input type="text" class="form-control" v-model="employee.name" required>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" v-model="employee.email">
+                        <input type="email" class="form-control" v-model="employee.email" required>
                     </div>
                     <!-- <div class="form-group">
                         <label>Image</label>
@@ -26,7 +26,7 @@
                  <div class="col-md-6">
                     <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" v-model="employee.address">
+                        <input type="text" class="form-control" v-model="employee.address" required>
                     </div>
                     <div class="form-group">
                         <label>DOB</label>

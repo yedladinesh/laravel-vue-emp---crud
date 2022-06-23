@@ -6,7 +6,7 @@
                 <router-link :to="{ name: 'EmployeeCreate' }" class="btn btn-primary btn-sm float-right mb-2">Add Employee</router-link>
             </div>
             <div class="col-md-6">
-                <input type="text" placeholder="Seach by name, email.." class="form-control" v-model="keywords">
+                <input type="text" placeholder="Search by name, email.." class="form-control" v-model="keywords">
             </div>
         </div>
         <div class="row">
@@ -43,6 +43,8 @@
                     </tbody>
                 </table>
                  <!-- <pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="5" @paginate="fetchPosts()"></pagination> --}} -->
+                  <pagination :data="employees" @pagination-change-page="getResults"></pagination>
+
             </div>
         </div>
     </div>
