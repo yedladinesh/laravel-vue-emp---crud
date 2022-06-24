@@ -10,22 +10,7 @@ class employeeController extends Controller
     //
     public function index()
     {
-        return employee::orderBy('id', 'desc')->paginate(10);
-        //$employee = employee::all()->toArray();
-        //all()->toArray();
-        // $response = [
-        //     'pagination' => [
-        //         'total' => $employee->total(),
-        //         'per_page' => $employee->perPage(),
-        //         'current_page' => $employee->currentPage(),
-        //         'last_page' => $employee->lastPage(),
-        //         'from' => $employee->firstItem(),
-        //         'to' => $employee->lastItem()
-        //     ],
-        //     'data' => $employee
-        // ];
-
-        //return array_reverse($employee);      
+        return employee::orderBy('id', 'desc')->paginate(3);
     }
     public function store(Request $request)
     {

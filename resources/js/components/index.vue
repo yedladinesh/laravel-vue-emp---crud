@@ -43,7 +43,7 @@
                     </tbody>
                 </table>
                  <!-- <pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="5" @paginate="fetchPosts()"></pagination> --}} -->
-                  <!-- <pagination :data="employees" @pagination-change-page="getResults"></pagination> -->
+                  <pagination :data="paginate" @pagination-change-page="getEmployee"></pagination>
 
             </div>
         </div>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-    //import LaravelVuePagination from 'laravel-vue-pagination';
+    
     export default {
         // components: {
         // 'Pagination': LaravelVuePagination
@@ -59,7 +59,8 @@
         data() {
             return {
                 keywords: null,
-                employees: {}
+                employees: {},
+                paginate: {}
             }
         },
         created() {
@@ -74,8 +75,7 @@
             getEmployee(page = 1) {
               this.axios.get('/api/employee?page='+page).then(response => {
                 this.employees = response.data.data;
-                console.log(response.data)
-                //this.pagination = response.data.pagination;
+                this.paginate = response.data;
             }).catch(error=>{
                 console.log(error)
             })
