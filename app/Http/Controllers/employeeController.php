@@ -29,6 +29,13 @@ class employeeController extends Controller
     }
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:employees',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+
         $employee = new employee([
             'empId' => random_int(10000, 99999),
             'name' => $request->input('name'),
@@ -48,6 +55,13 @@ class employeeController extends Controller
     }
     public function update($id, Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:employees,email,'.$id,
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+
         $employee = employee::find($id);
         $employee->update($request->all());
         return response()->json('employee updated!');

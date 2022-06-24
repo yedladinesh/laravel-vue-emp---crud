@@ -12,10 +12,14 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" v-model="employee.name">
+                        <span v-if="errors.name" :class="['label label-danger']">{{ errors.name[0] }}</span>
+
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="email" class="form-control" v-model="employee.email">
+                        <span v-if="errors.email" :class="['label label-danger']">{{ errors.email[0] }}</span>
+
                             </div>
                            <!-- <div class="form-group">
                                 <label>Image</label>
@@ -26,14 +30,20 @@
                             <div class="form-group">
                                 <label>Address</label>
                                 <input type="text" class="form-control" v-model="employee.address">
+                        <span v-if="errors.address" :class="['label label-danger']">{{ errors.address[0] }}</span>
+
                             </div>
                             <div class="form-group">
                                 <label>DOB</label>
                                 <input type="date" class="form-control" v-model="employee.dob">
+                        <span v-if="errors.dob" :class="['label label-danger']">{{ errors.dob[0] }}</span>
+
                             </div>
                             <div class="form-group">
                                 <label>Phone number</label>
                                 <input type="number" class="form-control" v-model="employee.phone">
+                        <span v-if="errors.phone" :class="['label label-danger']">{{ errors.phone[0] }}</span>
+
                             </div>
                             <button type="submit" class="btn btn-primary" >Update</button>
                         </div>
@@ -48,7 +58,9 @@
     export default {
         data() {
             return {
-                employee: {}
+                employee: {},
+                errors: [],
+
             }
         },
         created() {
@@ -64,6 +76,9 @@
                     .patch(`http://localhost:8000/api/employee/${this.$route.params.employeeId}`, this.employee)
                     .then((res) => {
                         this.$router.push({ name: 'EmployeeIndex' });
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
                     });
             }
         }
