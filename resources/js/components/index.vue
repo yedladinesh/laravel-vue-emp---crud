@@ -51,10 +51,10 @@
 </template>
 
 <script>
-    //import pagination from 'laravel-vue-pagination';
+    //import LaravelVuePagination from 'laravel-vue-pagination';
     export default {
-        // components:{
-        //     'pagination':  pagination
+        // components: {
+        // 'Pagination': LaravelVuePagination
         // },
         data() {
             return {
@@ -71,9 +71,10 @@
             }
         },
         methods: {
-            getEmployee() {
-              this.axios.get('http://127.0.0.1:8000/api/employee').then(response => {
-                this.employees = response.data;
+            getEmployee(page = 1) {
+              this.axios.get('/api/employee?page='+page).then(response => {
+                this.employees = response.data.data;
+                console.log(response.data)
                 //this.pagination = response.data.pagination;
             }).catch(error=>{
                 console.log(error)
@@ -81,7 +82,7 @@
             },
             deleteEmployee(employeeId) {
                 this.axios
-                    .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`)
+                    .delete(`/api/employee/${employeeId}`)
                     .then(response => {
                         let i = this.employees.map(data => data.id).indexOf(employeeId);
                         this.employees.splice(i, 1)
@@ -90,7 +91,7 @@
             // search
             search(){
                 this.axios
-                .get('http://127.0.0.1:8000/api/search',  { params: { keywords: this.keywords } })
+                .get('/api/search',  { params: { keywords: this.keywords } })
                 .then(response => this.employees = response.data)
                 .catch(error => {});
             }

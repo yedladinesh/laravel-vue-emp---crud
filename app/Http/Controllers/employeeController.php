@@ -10,8 +10,8 @@ class employeeController extends Controller
     //
     public function index()
     {
-        //$employee = employee::orderBy('id', 'desc')->paginate(3);
-        $employee = employee::all()->toArray();
+        return employee::orderBy('id', 'desc')->paginate(10);
+        //$employee = employee::all()->toArray();
         //all()->toArray();
         // $response = [
         //     'pagination' => [
@@ -25,7 +25,7 @@ class employeeController extends Controller
         //     'data' => $employee
         // ];
 
-        return array_reverse($employee);      
+        //return array_reverse($employee);      
     }
     public function store(Request $request)
     {

@@ -65,7 +65,7 @@
         },
         created() {
             this.axios
-                .get(`http://localhost:8000/api/employee/${this.$route.params.employeeId}`)
+                .get(`/api/employee/${this.$route.params.employeeId}`)
                 .then((res) => {
                     this.employee = res.data;
                 });
@@ -73,7 +73,7 @@
         methods: {
             updateEmployee() {
                 this.axios
-                    .patch(`http://localhost:8000/api/employee/${this.$route.params.employeeId}`, this.employee)
+                    .patch(`/api/employee/${this.$route.params.employeeId}`, this.employee)
                     .then((res) => {
                         this.$router.push({ name: 'EmployeeIndex' });
                     })

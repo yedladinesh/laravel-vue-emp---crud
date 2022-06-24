@@ -5398,7 +5398,7 @@ __webpack_require__.r(__webpack_exports__);
     addEmployee: function addEmployee() {
       var _this = this;
 
-      this.axios.post('http://localhost:8000/api/employee', this.employee).then(function (response) {
+      this.axios.post('/api/employee', this.employee).then(function (response) {
         return _this.$router.push({
           name: 'EmployeeIndex'
         });
@@ -5491,7 +5491,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get("http://localhost:8000/api/employee/".concat(this.$route.params.employeeId)).then(function (res) {
+    this.axios.get("/api/employee/".concat(this.$route.params.employeeId)).then(function (res) {
       _this.employee = res.data;
     });
   },
@@ -5499,7 +5499,7 @@ __webpack_require__.r(__webpack_exports__);
     updateEmployee: function updateEmployee() {
       var _this2 = this;
 
-      this.axios.patch("http://localhost:8000/api/employee/".concat(this.$route.params.employeeId), this.employee).then(function (res) {
+      this.axios.patch("/api/employee/".concat(this.$route.params.employeeId), this.employee).then(function (res) {
         _this2.$router.push({
           name: 'EmployeeIndex'
         });
@@ -5575,10 +5575,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//import pagination from 'laravel-vue-pagination';
+//import LaravelVuePagination from 'laravel-vue-pagination';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  // components:{
-  //     'pagination':  pagination
+  // components: {
+  // 'Pagination': LaravelVuePagination
   // },
   data: function data() {
     return {
@@ -5598,8 +5598,10 @@ __webpack_require__.r(__webpack_exports__);
     getEmployee: function getEmployee() {
       var _this = this;
 
-      this.axios.get('http://127.0.0.1:8000/api/employee').then(function (response) {
-        _this.employees = response.data; //this.pagination = response.data.pagination;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.axios.get('/api/employee?page=' + page).then(function (response) {
+        _this.employees = response.data.data;
+        console.log(response.data); //this.pagination = response.data.pagination;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5607,7 +5609,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteEmployee: function deleteEmployee(employeeId) {
       var _this2 = this;
 
-      this.axios["delete"]("http://127.0.0.1:8000/api/employee/".concat(employeeId)).then(function (response) {
+      this.axios["delete"]("/api/employee/".concat(employeeId)).then(function (response) {
         var i = _this2.employees.map(function (data) {
           return data.id;
         }).indexOf(employeeId);
@@ -5619,7 +5621,7 @@ __webpack_require__.r(__webpack_exports__);
     search: function search() {
       var _this3 = this;
 
-      this.axios.get('http://127.0.0.1:8000/api/search', {
+      this.axios.get('/api/search', {
         params: {
           keywords: this.keywords
         }
@@ -5653,7 +5655,6 @@ __webpack_require__.r(__webpack_exports__);
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //window.Vue = require('vue').default;
-//import * as Vue from 'vue'
 
 
 

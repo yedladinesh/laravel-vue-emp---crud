@@ -67,7 +67,7 @@ export default {
     methods: {
         addEmployee() {
             this.axios
-                .post('http://localhost:8000/api/employee', this.employee)
+                .post('/api/employee', this.employee)
                 .then(response => (
                     this.$router.push({
                         name: 'EmployeeIndex'
