@@ -56,13 +56,12 @@ class employeeController extends Controller
     // Update employee details 
     public function update($id, Request $request)
     {
-
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:employees,email,'.$id,
             'phone_number' => 'required|size:10',
             'address' => 'required',
-            'image' => 'mimes:jpg,png'
+            
         ]);
 
         $update = [
@@ -74,6 +73,9 @@ class employeeController extends Controller
         ];
 
         if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpg,png'
+            ]);
             $image = $request->file('image');
             $emp_image = $this->upload_media($image, employee::UPLOAD_EMP_IMAGE_PATH);
             $update['image'] = $emp_image;
