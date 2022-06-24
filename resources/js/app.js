@@ -17,8 +17,9 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.component('pagination', require('laravel-vue-pagination'));
-//import pagination from 'laravel-vue-pagination';
-
+//Import v-from
+import { Form, HasError, AlertError } from 'vform'
+window.Form = Form;
 
 import App from './app.vue';
 import { routes } from './routes';

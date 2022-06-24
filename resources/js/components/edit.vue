@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <router-link :to="{ name: 'EmployeeIndex' }" class="btn btn-primary btn-sm float-right mb-2">Back</router-link>
             </div>
-            <form @submit.prevent="updateEmployee">
+            <form @submit.prevent="updateEmployee" enctype="multipart/form-data">
                 <div class="row">
                     
                         <div class="col-md-6">
@@ -21,10 +21,10 @@
                         <span v-if="errors.email" :class="['label label-danger']">{{ errors.email[0] }}</span>
 
                             </div>
-                           <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label>Image</label>
-                                <input type="text" class="form-control" v-model="employee.email">
-                            </div> -->
+                                <input class="form-control" name="image" type="file" @change='uploadImage' accept="image/png, image/jpg">
+                            </div>
                         </div>
                          <div class="col-md-6">
                             <div class="form-group">
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone number</label>
-                                <input type="number" class="form-control" v-model="employee.phone">
+                                <input type="number" class="form-control" v-model="employee.phone_number">
                         <span v-if="errors.phone" :class="['label label-danger']">{{ errors.phone[0] }}</span>
 
                             </div>
@@ -58,9 +58,10 @@
     export default {
         data() {
             return {
-                employee: {},
+                employee: new Form({
+                    image: ''
+                }),
                 errors: [],
-
             }
         },
         created() {
@@ -72,6 +73,7 @@
         },
         methods: {
             updateEmployee() {
+
                 this.axios
                     .patch(`/api/employee/${this.$route.params.employeeId}`, this.employee)
                     .then((res) => {
@@ -80,7 +82,12 @@
                     .catch(err => {
                         this.errors = err.response.data.errors;
                     });
-            }
+            },
+
+            // On image upload 
+        uploadImage(e) {
+                this.employee.image = e.target.files[0];
+            },
         }
     }
 </script>

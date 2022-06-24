@@ -7,7 +7,7 @@
             </router-link>
         </div>
 
-        <form @submit.prevent="addEmployee">
+        <form @submit.prevent="addEmployee" enctype="multipart/form-data">
             <div class="row">
                  
                 <div class="alert alert-danger" v-if="errors.length">
@@ -27,10 +27,10 @@
                         <input type="email" class="form-control" v-model="employee.email" required>
                         <span v-if="errors.email" :class="['label label-danger']">{{ errors.email[0] }}</span>
                     </div>
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <label>Image</label>
-                        <input type="text" class="form-control" v-model="employee.email">
-                    </div> -->
+                        <input class="form-control" name="image" type="file" @change='uploadImage' accept="image/png, image/jpg">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -60,13 +60,16 @@
 export default {
     data() {
         return {
-            employee: {},
+            employee: new Form({
+                image:''
+            }),
             errors: [],
         }
     },
     methods: {
+        // Create employee
         addEmployee() {
-            this.axios
+            this.employee
                 .post('/api/employee', this.employee)
                 .then(response => (
                     this.$router.push({
@@ -78,7 +81,12 @@ export default {
                     console.log(this.errors)
                 })
                 .finally(() => this.loading = false)
-        }
+        },
+
+        // On image upload 
+        uploadImage(e) {
+                this.employee.image = e.target.files[0];
+            },
     }
 }
 </script>
