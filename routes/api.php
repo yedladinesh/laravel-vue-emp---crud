@@ -21,4 +21,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('api')->group(function () {
     Route::resource('employee', employeeController::class);
     Route::get('search', 'employeeController@search');
+    Route::post('employee/update/{id}', 'employeeController@update');
 });

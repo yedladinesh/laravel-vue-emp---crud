@@ -6,6 +6,7 @@
                 <router-link :to="{ name: 'EmployeeIndex' }" class="btn btn-primary btn-sm float-right mb-2">Back</router-link>
             </div>
             <form @submit.prevent="updateEmployee" enctype="multipart/form-data">
+             
                 <div class="row">
                     
                         <div class="col-md-6">
@@ -42,7 +43,7 @@
                             <div class="form-group">
                                 <label>Phone number</label>
                                 <input type="number" class="form-control" v-model="employee.phone_number">
-                        <span v-if="errors.phone" :class="['label label-danger']">{{ errors.phone[0] }}</span>
+                        <span v-if="errors.phone_number" :class="['label label-danger']">{{ errors.phone_number[0] }}</span>
 
                             </div>
                             <button type="submit" class="btn btn-primary" >Update</button>
@@ -58,9 +59,9 @@
     export default {
         data() {
             return {
-                employee: new Form({
+                employee: {
                     image: ''
-                }),
+                },
                 errors: [],
             }
         },
@@ -73,9 +74,22 @@
         },
         methods: {
             updateEmployee() {
-
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    }
+                }
+                var form = new FormData();
+                form.append('_method', 'PUT');
+                form.append('image',this.employee.image);
+                form.append('name',this.employee.name);
+                form.append('address',this.employee.address);
+                form.append('email',this.employee.email);
+                form.append('phone_number',this.employee.phone_number);
+                form.append('dob',this.employee.dob);
+                
                 this.axios
-                    .patch(`/api/employee/${this.$route.params.employeeId}`, this.employee)
+                    .post(`/api/employee/${this.$route.params.employeeId}`, form, config)
                     .then((res) => {
                         this.$router.push({ name: 'EmployeeIndex' });
                     })

@@ -45,8 +45,8 @@
                     </div>
                     <div class="form-group">
                         <label>Phone number</label>
-                        <input type="number" class="form-control" v-model="employee.phone">
-                        <span v-if="errors.phone" :class="['label label-danger']">{{ errors.phone[0] }}</span>
+                        <input type="number" class="form-control" v-model="employee.phone_number">
+                        <span v-if="errors.phone_number" :class="['label label-danger']">{{ errors.phone_number[0] }}</span>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>

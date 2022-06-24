@@ -14,7 +14,7 @@ class employeeController extends Controller
     // get all employees data
     public function index()
     {
-        return employee::orderBy('id', 'desc')->paginate(3);
+        return employee::orderBy('id', 'desc')->paginate(5);
     }
 
     // create new employee
@@ -23,7 +23,7 @@ class employeeController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:employees',
-            'phone' => 'required',
+            'phone_number' => 'required|size:10',
             'address' => 'required',
             'image' => 'mimes:jpg,png'
         ]);
@@ -57,11 +57,10 @@ class employeeController extends Controller
     public function update($id, Request $request)
     {
 
-        dd($request);
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:employees,email,'.$id,
-            'phone_number' => 'required',
+            'phone_number' => 'required|size:10',
             'address' => 'required',
             'image' => 'mimes:jpg,png'
         ]);
@@ -71,12 +70,12 @@ class employeeController extends Controller
             'email' => $request->email,
             'address' => $request->address,
             'dob' => $request->dob,
-            'phone' => $request->phone_number,
+            'phone_number' => $request->phone_number,
         ];
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $emp_image = $this->upload_media($image, Course::UPLOAD_EMP_IMAGE_PATH);
+            $emp_image = $this->upload_media($image, employee::UPLOAD_EMP_IMAGE_PATH);
             $update['image'] = $emp_image;
         }
 

@@ -5488,12 +5488,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      employee: new Form({
+      employee: {
         image: ''
-      }),
+      },
       errors: []
     };
   },
@@ -5508,7 +5509,20 @@ __webpack_require__.r(__webpack_exports__);
     updateEmployee: function updateEmployee() {
       var _this2 = this;
 
-      this.axios.patch("/api/employee/".concat(this.$route.params.employeeId), this.employee).then(function (res) {
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var form = new FormData();
+      form.append('_method', 'PUT');
+      form.append('image', this.employee.image);
+      form.append('name', this.employee.name);
+      form.append('address', this.employee.address);
+      form.append('email', this.employee.email);
+      form.append('phone_number', this.employee.phone_number);
+      form.append('dob', this.employee.dob);
+      this.axios.post("/api/employee/".concat(this.$route.params.employeeId), form, config).then(function (res) {
         _this2.$router.push({
           name: 'EmployeeIndex'
         });
@@ -29503,26 +29517,26 @@ var render = function () {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.employee.phone,
-                    expression: "employee.phone",
+                    value: _vm.employee.phone_number,
+                    expression: "employee.phone_number",
                   },
                 ],
                 staticClass: "form-control",
                 attrs: { type: "number" },
-                domProps: { value: _vm.employee.phone },
+                domProps: { value: _vm.employee.phone_number },
                 on: {
                   input: function ($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.employee, "phone", $event.target.value)
+                    _vm.$set(_vm.employee, "phone_number", $event.target.value)
                   },
                 },
               }),
               _vm._v(" "),
-              _vm.errors.phone
+              _vm.errors.phone_number
                 ? _c("span", { class: ["label label-danger"] }, [
-                    _vm._v(_vm._s(_vm.errors.phone[0])),
+                    _vm._v(_vm._s(_vm.errors.phone_number[0])),
                   ])
                 : _vm._e(),
             ]),
@@ -29768,9 +29782,9 @@ var render = function () {
                   },
                 }),
                 _vm._v(" "),
-                _vm.errors.phone
+                _vm.errors.phone_number
                   ? _c("span", { class: ["label label-danger"] }, [
-                      _vm._v(_vm._s(_vm.errors.phone[0])),
+                      _vm._v(_vm._s(_vm.errors.phone_number[0])),
                     ])
                   : _vm._e(),
               ]),
