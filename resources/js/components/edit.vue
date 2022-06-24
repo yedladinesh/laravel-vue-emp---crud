@@ -25,6 +25,10 @@
                             <div class="form-group">
                                 <label>Image</label>
                                 <input class="form-control" name="image" type="file" @change='uploadImage' accept="image/png, image/jpg">
+
+                                <template v-if="previewImage">
+                                    <img :src="previewImage" class="img-fluid editImg" />
+                                </template>
                             </div>
                         </div>
                          <div class="col-md-6">
@@ -62,6 +66,7 @@
                 employee: {
                     image: ''
                 },
+                previewImage: null,
                 errors: [],
             }
         },
@@ -70,6 +75,9 @@
                 .get(`/api/employee/${this.$route.params.employeeId}`)
                 .then((res) => {
                     this.employee = res.data;
+                    if(res.data.image){
+                        this.previewImage = '/assets/images/employee/'+res.data.image;
+                    }
                 });
         },
         methods: {
@@ -101,6 +109,7 @@
             // On image upload 
         uploadImage(e) {
                 this.employee.image = e.target.files[0];
+                this.previewImage = URL.createObjectURL(e.target.files[0]); 
             },
         }
     }

@@ -30,6 +30,10 @@
                     <div class="form-group">
                         <label>Image</label>
                         <input class="form-control" name="image" type="file" @change='uploadImage' accept="image/png, image/jpg">
+                         <template v-if="preview">
+                            <img :src="previewImage" class="img-fluid" />
+                        </template>
+
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -40,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label>DOB</label>
-                        <input type="date" class="form-control" v-model="employee.dob" min="1950-01-01" max="2017-04-20">
+                        <input type="date" class="form-control" v-model="employee.dob" min="1950-01-01" max="2017-04-20" required>
                         <span v-if="errors.dob" :class="['label label-danger']">{{ errors.dob[0] }}</span>
                     </div>
                     <div class="form-group">
@@ -63,6 +67,8 @@ export default {
             employee: new Form({
                 image:''
             }),
+            preview: null,
+            previewImage: null,
             errors: [],
         }
     },
@@ -85,7 +91,14 @@ export default {
 
         // On image upload 
         uploadImage(e) {
-                this.employee.image = e.target.files[0];
+            this.employee.image = e.target.files[0];
+                if (e.target.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = (e) => {
+                    this.preview = e.target.result;
+                    }
+                    this.previewImage = URL.createObjectURL(e.target.files[0]); 
+                }
             },
     }
 }

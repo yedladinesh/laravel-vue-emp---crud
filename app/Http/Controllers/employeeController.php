@@ -25,7 +25,7 @@ class employeeController extends Controller
             'email' => 'required|email|unique:employees',
             'phone_number' => 'required|size:10',
             'address' => 'required',
-            'image' => 'mimes:jpg,png'
+            
         ]);
         $employee = new employee([
             'empId' => random_int(10000, 99999),
@@ -38,6 +38,9 @@ class employeeController extends Controller
         
         // Upload employee profile image
         if($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpg,png'
+            ]);
             $image = $request->file('image');
             $emp_image = $this->upload_media($image, employee::UPLOAD_EMP_IMAGE_PATH);
             $employee->image = $emp_image;
