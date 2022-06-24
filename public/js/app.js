@@ -28831,7 +28831,7 @@ var render = function () {
                   },
                 ],
                 staticClass: "form-control",
-                attrs: { type: "date" },
+                attrs: { type: "date", min: "1950-01-01", max: "2017-04-20" },
                 domProps: { value: _vm.employee.dob },
                 on: {
                   input: function ($event) {
@@ -29060,7 +29060,7 @@ var render = function () {
                     },
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "date" },
+                  attrs: { type: "date", min: "1950-01-01", max: "2017-04-20" },
                   domProps: { value: _vm.employee.dob },
                   on: {
                     input: function ($event) {

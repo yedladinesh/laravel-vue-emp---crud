@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label>DOB</label>
-                                <input type="date" class="form-control" v-model="employee.dob">
+                                <input type="date" class="form-control" v-model="employee.dob" min="1950-01-01" max="2017-04-20">
                         <span v-if="errors.dob" :class="['label label-danger']">{{ errors.dob[0] }}</span>
 
                             </div>
